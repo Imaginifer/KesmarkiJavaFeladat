@@ -28,20 +28,23 @@ public class TextUI {
         do{
             
            HashMap<Integer, String> persons = dh.listPersons();
-                       
-           int q = printItemsMap(persons, "__Persons in registry");
-           switch(q){
-               case 0:
-                   String name = requestInput("the name of the new person:");
-                   dh.newPerson(name);
-                   break;
-               case -1:
-                   proceed=!requestConfirmation("quit the program");
-                   break;
-               default:
-                   personOptionsMenu(persons.get(q), q);
-           }
-                   
+           if(!persons.isEmpty()){            
+                int q = printItemsMap(persons, "__Persons in registry");
+                switch(q){
+                    case 0:
+                        String name = requestInput("the name of the new person:");
+                        dh.newPerson(name);
+                        break;
+                    case -1:
+                        proceed=!requestConfirmation("quit the program");
+                        break;
+                    default:
+                        personOptionsMenu(persons.get(q), q);
+                }
+           }else{
+               proceed=false;
+               System.out.println("Database error!");
+           }        
         }while(proceed);
         System.out.println("Goodbye!");
     }
